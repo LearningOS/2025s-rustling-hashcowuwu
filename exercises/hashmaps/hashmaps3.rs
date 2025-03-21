@@ -39,10 +39,11 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
         let team_1 = scores.entry(team_1_name).or_default();
+
         team_1.goals_scored += team_1_score;
         team_1.goals_conceded += team_2_score;
-        let team_2 = scores.entry(team_2_name).or_default();
 
+        let team_2 = scores.entry(team_2_name).or_default();
         team_2.goals_scored += team_2_score;
         team_2.goals_conceded += team_1_score;
     }
