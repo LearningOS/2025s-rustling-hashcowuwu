@@ -28,7 +28,7 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     let qc = Arc::new(q);
     let qc1 = Arc::clone(&qc);
     let qc2 = Arc::clone(&qc);
-
+    // 在 Rust 中，tx 是一个拥有所有权的值（owned value）。如果直接将 tx 移动到一个线程中，它会被该线程独占，其他线程无法再使用它。
     let tx1 = tx.clone();
     thread::spawn(move || {
         for val in &qc1.first_half {
