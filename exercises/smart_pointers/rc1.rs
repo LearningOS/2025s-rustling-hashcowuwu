@@ -40,7 +40,7 @@ fn main() {
     let mercury = Planet::Mercury(Rc::clone(&sun));
     println!("reference count = {}", Rc::strong_count(&sun)); // 2 references
     mercury.details();
-
+    //增加引用计数
     let venus = Planet::Venus(Rc::clone(&sun));
     println!("reference count = {}", Rc::strong_count(&sun)); // 3 references
     venus.details();
@@ -73,7 +73,7 @@ fn main() {
     neptune.details();
 
     assert_eq!(Rc::strong_count(&sun), 9);
-
+    //减少对应的引用计数
     drop(neptune);
     println!("reference count = {}", Rc::strong_count(&sun)); // 8 references
 
