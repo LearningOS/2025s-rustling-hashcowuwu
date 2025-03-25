@@ -2,11 +2,10 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
-use std::vec::*;
+use std::{result, vec::*};
 
 #[derive(Debug)]
 struct Node<T> {
@@ -69,14 +68,56 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self 
+    where
+    T: PartialOrd+Copy
 	{
 		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+        let mut result = LinkedList::new();
+        let mut ptr_a = list_a.start.clone();
+        let mut ptr_b  = list_b.start.clone();
+        loop {
+            match (ptr_a,ptr_b) {
+                (Some(a_node),Some(b_node)) => {
+                    let a_val = unsafe {a_node.as_ref().val.clone()};
+                    let b_val = unsafe { b_node.as_ref().val.clone() };
+                    if a_val <= b_val {
+                        result.add(a_val);
+                        ptr_a = unsafe {
+                            a_node.as_ref().next
+                        };
+                    }else {
+                        result.add(b_val);
+                        ptr_b = unsafe {
+                            b_node.as_ref().next
+                        };
+                    } 
+
+                }
+                (Some(a_node),None) =>{
+                    let a_val = unsafe {a_node.as_ref().val.clone()};
+
+                    result.add(a_val);
+                    ptr_a = unsafe {
+                        a_node.as_ref().next
+                    };
+
+                }
+                (None,Some(b_node)) =>{
+                    let b_val = unsafe { b_node.as_ref().val.clone() };
+                    result.add(b_val);
+                    ptr_b = unsafe {
+                        b_node.as_ref().next
+                    };
+
+                }
+                (None,None) => break,
+
+                
+            }
+            
         }
+        result
 	}
 }
 
