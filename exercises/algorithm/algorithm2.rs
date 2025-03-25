@@ -5,6 +5,7 @@
 // I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
+use std::mem::swap;
 use std::ptr::NonNull;
 use std::vec::*;
 
@@ -73,6 +74,11 @@ impl<T> LinkedList<T> {
         }
     }
 	pub fn reverse(&mut self){
+        let mut st_ptr = self.start.take();
+        let mut ed_ptr = self.end.take();
+        while st_ptr != ed_ptr {
+            swap(& st_ptr.as_ref().val,  &ed_ptr.as_ref().val);
+        }
 		// TODO
 	}
 }
