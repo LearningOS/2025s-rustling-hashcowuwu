@@ -3,12 +3,22 @@
     This problem requires you to implement a sorting algorithm
     you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM NOT DONE
 
-fn sort<T>(array: &mut [T]) {
+use std::f32::consts::PI;
+
+fn sort<T: PartialOrd + Copy>(array: &mut [T]) {
     //TODO
-    let mid = array.len();
-    println!("{mid}")
+    let n = array.len();
+    if n <= 1 {
+        return;
+    }
+    for i in 0..n {
+        for j in 0..(n - i - 1) {
+            if array[j] > array[j + 1] {
+                array.swap(j, j + 1);
+            }
+        }
+    }
 }
 #[cfg(test)]
 mod tests {
