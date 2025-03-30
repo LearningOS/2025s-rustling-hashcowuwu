@@ -2,7 +2,6 @@
     heap
     This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -91,9 +90,12 @@ where
             return None;
         }
 
-        let result = Some(std::mem::replace(&mut self.items[1], T::default()));
-        self.items.swap(1, self.count);
-        self.sink(1);
+        let result = Some(self.items.swap_remove(1));
+        self.count -= 1;
+        if self.count > 0 {
+            self.sink(1);
+        }
+    
         result
     }
 
